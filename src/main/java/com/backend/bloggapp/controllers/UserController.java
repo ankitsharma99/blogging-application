@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,13 +19,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping ("/create")
-    public ResponseEntity<UserDto> createUser(@RequestBody  UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody  UserDto userDto) {
         UserDto userDto1 = this.userService.createUser(userDto);
         return new ResponseEntity<>(userDto1, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{userId}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable("userId") Long userId) {
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable("userId") Long userId) {
         UserDto userDto1 = this.userService.updateUser(userDto, userId);
         return new ResponseEntity<>(userDto1, HttpStatus.OK);
     }
