@@ -5,12 +5,16 @@ import com.backend.bloggapp.entities.Post;
 import com.backend.bloggapp.entities.User;
 import com.backend.bloggapp.exceptions.ResourceNotFoundException;
 import com.backend.bloggapp.payloads.PostDto;
+import com.backend.bloggapp.payloads.PostResponse;
 import com.backend.bloggapp.repositories.CategoryRepository;
 import com.backend.bloggapp.repositories.PostRepository;
 import com.backend.bloggapp.repositories.UserRepository;
 import com.backend.bloggapp.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -68,9 +72,21 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts() {
-        List<Post> allPosts = this.postRepository.findAll();
-        return allPosts.stream().map(post -> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+    public PostResponse getAllPosts(int pageNumber, int pageSize) {
+        Pageable p = PageRequest.of(pageNumber, pageSize);
+        Page<Post> pagePost = this.postRepository.findAll(p);
+        List<Post> allPosts = pagePost.getContent();
+        List<PostDto> postDtos = allPosts.stream().map(post -> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(postDtos);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalElements(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+
+        return postResponse;
     }
 
     @Override

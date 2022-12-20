@@ -4,6 +4,7 @@ import com.backend.bloggapp.entities.Post;
 import com.backend.bloggapp.payloads.ApiResponse;
 import com.backend.bloggapp.payloads.CategoryDto;
 import com.backend.bloggapp.payloads.PostDto;
+import com.backend.bloggapp.payloads.PostResponse;
 import com.backend.bloggapp.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,18 +28,19 @@ public class PostController {
 
     @GetMapping("/user/{userId}/posts")
     public ResponseEntity<List<PostDto>> getPostsByUser(@PathVariable("userId") Long userId) {
-        return new ResponseEntity<>(this.postService.getAllPostsByUser(userId), HttpStatus.OK);
+        return ;
     }
 
     @GetMapping("/category/{categoryId}/posts")
-    public ResponseEntity<List<PostDto>> getAllPostsByCategory(@PathVariable("categoryId") Long categoryId) {
+    public ResponseEntity<List<Posnew ResponseEntity<>(this.postService.getAllPostsByUser(userId), HttpStatus.OK)tDto>> getAllPostsByCategory(@PathVariable("categoryId") Long categoryId) {
         return new ResponseEntity<>(this.postService.getAllPostsByCategory(categoryId), HttpStatus.OK);
     }
 
     // get all posts
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDto>> getAllPosts() {
-        return new ResponseEntity<>(this.postService.getAllPosts(), HttpStatus.OK);
+    public ResponseEntity<PostResponse> getAllPosts(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
+                                                    @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+        return new ResponseEntity<>(this.postService.getAllPosts(pageNumber, pageSize), HttpStatus.OK);
     }
 
     @GetMapping("/posts/{postId}")

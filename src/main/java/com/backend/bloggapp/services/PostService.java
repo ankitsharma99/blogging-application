@@ -3,6 +3,7 @@ package com.backend.bloggapp.services;
 import com.backend.bloggapp.entities.Category;
 import com.backend.bloggapp.entities.Post;
 import com.backend.bloggapp.payloads.PostDto;
+import com.backend.bloggapp.payloads.PostResponse;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface PostService {
     // get one
     PostDto getPostById(Long postId);
     // get all
-    List<PostDto> getAllPosts();
+    PostResponse getAllPosts(int pageNumber, int pageSize);
     // get all posts by category
     List<PostDto> getAllPostsByCategory(Long categoryId);
     // get all posts by user
