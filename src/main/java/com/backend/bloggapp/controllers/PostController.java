@@ -6,6 +6,7 @@ import com.backend.bloggapp.payloads.CategoryDto;
 import com.backend.bloggapp.payloads.PostDto;
 import com.backend.bloggapp.payloads.PostResponse;
 import com.backend.bloggapp.services.PostService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,8 +57,20 @@ public class PostController {
         return new ResponseEntity<>(new ApiResponse("Post Deleted Successfully", true), HttpStatus.OK);
     }
 
+    @DeleteMapping("/posts/all")
+    public ResponseEntity<ApiResponse> deleteAllPosts() {
+        this.postService.deleteAllPosts();
+        return new ResponseEntity<>(new ApiResponse("Posts Deleted Successfully", true), HttpStatus.OK);
+    }
+
     @PutMapping("/posts/{postId}")
     public ResponseEntity<PostDto> updatePostById(@RequestBody PostDto postDto, @PathVariable("postId") Long postId) {
         return new ResponseEntity<>(this.postService.updatePost(postDto, postId), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/posts/search/{keyword}")
+    public ResponseEntity<List<PostDto>> searchPostsByTitle(@PathVariable("keyword") String keyword) {
+        return new ResponseEntity<>(this.postService.searchPosts(keyword), HttpStatus.OK);
     }
 }

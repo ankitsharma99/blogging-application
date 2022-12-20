@@ -24,4 +24,5 @@ public interface PostService {
     List<PostDto> getAllPostsByUser(Long userId);
     // search posts
     List<PostDto> searchPosts(String keyword);
+    void deleteAllPosts();
 }
