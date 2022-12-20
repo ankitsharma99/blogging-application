@@ -12,6 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class PostDto {
+    private Long postId;
     private String postTitle;
     private String content;
     private String imageName;

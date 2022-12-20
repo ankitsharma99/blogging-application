@@ -1,5 +1,6 @@
 package com.backend.bloggapp.controllers;
 
+import com.backend.bloggapp.entities.Post;
 import com.backend.bloggapp.payloads.CategoryDto;
 import com.backend.bloggapp.payloads.PostDto;
 import com.backend.bloggapp.services.PostService;
@@ -31,5 +32,16 @@ public class PostController {
     @GetMapping("/category/{categoryId}/posts")
     public ResponseEntity<List<PostDto>> getAllPostsByCategory(@PathVariable("categoryId") Long categoryId) {
         return new ResponseEntity<>(this.postService.getAllPostsByCategory(categoryId), HttpStatus.OK);
+    }
+
+    // get all posts
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostDto>> getAllPosts() {
+        return new ResponseEntity<>(this.postService.getAllPosts(), HttpStatus.OK);
+    }
+
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<PostDto> getPostById(@PathVariable("postId") Long postId) {
+        return new ResponseEntity<>(this.postService.getPostById(postId), HttpStatus.OK);
     }
 }
