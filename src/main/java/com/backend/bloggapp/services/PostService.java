@@ -20,7 +20,7 @@ public interface PostService {
     // get all posts by category
     List<PostDto> getAllPostsByCategory(Long categoryId);
     // get all posts by user
-    List<Post> getAllPostsByUser(Long userId);
+    List<PostDto> getAllPostsByUser(Long userId);
     // search posts
-    List<Post> searchPosts(String keyword);
+    List<PostDto> searchPosts(String keyword);
 }
