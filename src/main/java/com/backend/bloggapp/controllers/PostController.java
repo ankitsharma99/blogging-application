@@ -1,5 +1,6 @@
 package com.backend.bloggapp.controllers;
 
+import com.backend.bloggapp.config.AppConstants;
 import com.backend.bloggapp.entities.Post;
 import com.backend.bloggapp.payloads.ApiResponse;
 import com.backend.bloggapp.payloads.CategoryDto;
@@ -39,10 +40,10 @@ public class PostController {
 
     // get all posts
     @GetMapping("/posts")
-    public ResponseEntity<PostResponse> getAllPosts(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
-                                                    @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
-                                                    @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
-                                                    @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) {
+    public ResponseEntity<PostResponse> getAllPosts(@RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) int pageNumber,
+                                                    @RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) int pageSize,
+                                                    @RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
+                                                    @RequestParam(value = "sortDir", defaultValue = AppConstants.SORT_DIR, required = false) String sortDir) {
         return new ResponseEntity<>(this.postService.getAllPosts(pageNumber, pageSize, sortBy, sortDir), HttpStatus.OK);
     }
 
