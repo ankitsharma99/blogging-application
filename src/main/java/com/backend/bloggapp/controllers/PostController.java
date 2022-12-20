@@ -28,19 +28,21 @@ public class PostController {
 
     @GetMapping("/user/{userId}/posts")
     public ResponseEntity<List<PostDto>> getPostsByUser(@PathVariable("userId") Long userId) {
-        return ;
+        return new ResponseEntity<>(this.postService.getAllPostsByUser(userId), HttpStatus.OK);
     }
 
     @GetMapping("/category/{categoryId}/posts")
-    public ResponseEntity<List<Posnew ResponseEntity<>(this.postService.getAllPostsByUser(userId), HttpStatus.OK)tDto>> getAllPostsByCategory(@PathVariable("categoryId") Long categoryId) {
+    public ResponseEntity<List<PostDto>> getAllPostsByCategory(@PathVariable("categoryId") Long categoryId) {
         return new ResponseEntity<>(this.postService.getAllPostsByCategory(categoryId), HttpStatus.OK);
     }
 
     // get all posts
     @GetMapping("/posts")
     public ResponseEntity<PostResponse> getAllPosts(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
-                                                    @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
-        return new ResponseEntity<>(this.postService.getAllPosts(pageNumber, pageSize), HttpStatus.OK);
+                                                    @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+                                                    @RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
+                                                    @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) {
+        return new ResponseEntity<>(this.postService.getAllPosts(pageNumber, pageSize, sortBy, sortDir), HttpStatus.OK);
     }
 
     @GetMapping("/posts/{postId}")
