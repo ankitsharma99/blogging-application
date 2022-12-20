@@ -1,6 +1,7 @@
 package com.backend.bloggapp.controllers;
 
 import com.backend.bloggapp.entities.Post;
+import com.backend.bloggapp.payloads.ApiResponse;
 import com.backend.bloggapp.payloads.CategoryDto;
 import com.backend.bloggapp.payloads.PostDto;
 import com.backend.bloggapp.services.PostService;
@@ -40,8 +41,19 @@ public class PostController {
         return new ResponseEntity<>(this.postService.getAllPosts(), HttpStatus.OK);
     }
 
-    @GetMapping("/post/{postId}")
+    @GetMapping("/posts/{postId}")
     public ResponseEntity<PostDto> getPostById(@PathVariable("postId") Long postId) {
         return new ResponseEntity<>(this.postService.getPostById(postId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<ApiResponse> deletePostById(@PathVariable("postId") Long postId) {
+        this.postService.deletePost(postId);
+        return new ResponseEntity<>(new ApiResponse("Post Deleted Successfully", true), HttpStatus.OK);
+    }
+
+    @PutMapping("/posts/{postId}")
+    public ResponseEntity<PostDto> updatePostById(@RequestBody PostDto postDto, @PathVariable("postId") Long postId) {
+        return new ResponseEntity<>(this.postService.updatePost(postDto, postId), HttpStatus.OK);
     }
 }
