@@ -51,7 +51,7 @@ public class JwtTokenHelper {
                 .signWith(SignatureAlgorithm.HS512, SECRET).compact();
     }
 
-    private Boolean validateToken(String token, UserDetails userDetails) {
+    public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
