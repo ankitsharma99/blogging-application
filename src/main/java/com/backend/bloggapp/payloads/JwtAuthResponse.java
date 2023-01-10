@@ -1,4 +1,4 @@
-package com.backend.bloggapp.security;
+package com.backend.bloggapp.payloads;
 
 import lombok.Getter;
 import lombok.Setter;
