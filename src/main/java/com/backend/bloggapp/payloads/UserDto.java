@@ -1,11 +1,14 @@
 package com.backend.bloggapp.payloads;
 
+import com.backend.bloggapp.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,4 +26,5 @@ public class UserDto {      // DTO -> Data Transfer Object
     @NotEmpty
     @Size(min = 8, max = 16, message = "Password must be minimum of 8 characters and maximum of 16 characters")
     private String password;
+    private Set<RoleDto> roles = new HashSet<>();
 }

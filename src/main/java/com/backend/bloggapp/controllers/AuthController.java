@@ -3,7 +3,9 @@ package com.backend.bloggapp.controllers;
 import com.backend.bloggapp.exceptions.ApiException;
 import com.backend.bloggapp.payloads.JwtAuthRequest;
 import com.backend.bloggapp.payloads.JwtAuthResponse;
+import com.backend.bloggapp.payloads.UserDto;
 import com.backend.bloggapp.security.JwtTokenHelper;
+import com.backend.bloggapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,9 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/login")
     public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request) throws Exception {
         authenticate(request.getUsername(), request.getPassword()); // function below
@@ -48,5 +53,12 @@ public class AuthController {
             System.out.println("Invalid Details");
             throw new ApiException("Invalid Username or Password");
         }
+    }
+
+
+    // register user API
+    @PostMapping("/register")
+    public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
+        return new ResponseEntity<>(this.userService.registerNewUser(userDto), HttpStatus.CREATED);
     }
 }
