@@ -7,6 +7,7 @@ import com.backend.bloggapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,6 +42,7 @@ public class UserController {
         return new ResponseEntity<>(this.userService.getAllUsers(), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("delete/{userId}")
     public ResponseEntity<ApiResponse> deleteUser(@PathVariable("userId") Long userId) {
         this.userService.deleteUser(userId);

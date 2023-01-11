@@ -1,5 +1,6 @@
 package com.backend.bloggapp.controllers;
 
+import com.backend.bloggapp.exceptions.ApiException;
 import com.backend.bloggapp.payloads.JwtAuthRequest;
 import com.backend.bloggapp.payloads.JwtAuthResponse;
 import com.backend.bloggapp.security.JwtTokenHelper;
@@ -45,7 +46,7 @@ public class AuthController {
         }
         catch (BadCredentialsException e) {
             System.out.println("Invalid Details");
-            throw new Exception("Invalid Username or Password");
+            throw new ApiException("Invalid Username or Password");
         }
     }
 }
